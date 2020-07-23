@@ -42,7 +42,7 @@
                       <i class="fas fa-plus"></i>
                     </button>
                   </div>
-                  <h5>$1219</h5>
+                  <h5>$<span id="phonePrice">1219</span></h5>
                   <img src="images/remove.png" alt="" class="remove-item" />
                 </div>
               </div>
@@ -103,9 +103,9 @@
     <!-- JavaScript Functionality -->
     <script>
       // iPhone plus part
-      plusItem('plusIphone', 'numberOfIphone');
+      plusItem('plusIphone', 'numberOfIphone', 'phonePrice');
 
-      function plusItem(id, currentAmount) {
+      function plusItem(id, currentAmount, price) {
         const plusBtn = document.getElementById(id);
         plusBtn.addEventListener('click', function () {
           const oldNumber = parseFloat(
@@ -113,6 +113,11 @@
           );
           const newNumber = oldNumber + 1;
           document.getElementById(currentAmount).value = newNumber;
+
+          // Price
+          const oldPrice = parseFloat(document.getElementById(price).innerText);
+          const unitPrice = oldPrice / oldNumber;
+          document.getElementById(price).innerText = unitPrice * newNumber;
         });
       }
     </script>
