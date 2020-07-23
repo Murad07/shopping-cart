@@ -69,7 +69,7 @@
                       <i class="fas fa-plus"></i>
                     </button>
                   </div>
-                  <h5>$59</h5>
+                  <h5>$<span id="casePrice">59</span></h5>
                   <img src="images/remove.png" alt="" class="remove-item" />
                 </div>
               </div>
@@ -84,9 +84,9 @@
                 </div>
 
                 <div class="col-md-4 status">
-                  <h5>$1,278</h5>
-                  <h5>$0</h5>
-                  <h5>$1,278</h5>
+                  <h5>$<span id="subtotal">1278</span></h5>
+                  <h5>$<span id="tax">0</span></h5>
+                  <h5>$<span id="total">1278</span></h5>
                 </div>
               </div>
             </div>
@@ -102,22 +102,40 @@
 
     <!-- JavaScript Functionality -->
     <script>
-      // iPhone plus part
-      plusItem('plusIphone', 'numberOfIphone', 'phonePrice');
+      // iPhone part
+      calculateItem('plusIphone', 'numberOfIphone', 'phonePrice', 1);
+      calculateItem('minusIphone', 'numberOfIphone', 'phonePrice', -1);
 
-      function plusItem(id, currentAmount, price) {
+      // phone case part
+      calculateItem('plusCase', 'numberOfCase', 'casePrice', 1);
+      calculateItem('minusCase', 'numberOfCase', 'casePrice', -1);
+
+      function calculateItem(id, currentAmount, price, unitAmount) {
+        // Get a Item by id
         const plusBtn = document.getElementById(id);
         plusBtn.addEventListener('click', function () {
+          // Count each Item
           const oldNumber = parseFloat(
             document.getElementById(currentAmount).value
           );
-          const newNumber = oldNumber + 1;
+          const newNumber = oldNumber + unitAmount;
           document.getElementById(currentAmount).value = newNumber;
 
-          // Price
+          // Calculate Each Item Price
           const oldPrice = parseFloat(document.getElementById(price).innerText);
           const unitPrice = oldPrice / oldNumber;
           document.getElementById(price).innerText = unitPrice * newNumber;
+
+          // Calulate SubTotal price
+          const subtotal =
+            parseFloat(document.getElementById('subtotal').innerText) +
+            unitPrice;
+          document.getElementById('subtotal').innerText = subtotal;
+
+          // Calculate total price
+          const total =
+            subtotal + parseFloat(document.getElementById('tax').innerText);
+          document.getElementById('total').innerText = total;
         });
       }
     </script>
